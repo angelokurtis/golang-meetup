@@ -6,7 +6,7 @@ import (
 )
 
 func NewSugaredLogger() *zap.SugaredLogger {
-	logger, err := zap.NewProduction()
+	logger, err := zap.NewDevelopment()
 	if err != nil {
 		log.Fatal(err)
 	}

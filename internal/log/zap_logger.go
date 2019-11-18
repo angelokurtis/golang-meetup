@@ -6,10 +6,10 @@ import (
 )
 
 type ZapLogger struct {
-	zap.SugaredLogger
+	*zap.SugaredLogger
 }
 
-func NewZapLogger(sugaredLogger zap.SugaredLogger) *ZapLogger {
+func NewZapLogger(sugaredLogger *zap.SugaredLogger) *ZapLogger {
 	return &ZapLogger{SugaredLogger: sugaredLogger}
 }
 
