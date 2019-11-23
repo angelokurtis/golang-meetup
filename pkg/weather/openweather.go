@@ -16,8 +16,11 @@ type OpenWeather struct {
 	location   location.Locator
 }
 
-func NewOpenWeather(log log.Logger, httpClient *http.Client, location location.Locator) *OpenWeather {
-	return &OpenWeather{log: log, httpClient: httpClient, location: location}
+func NewOpenWeather() *OpenWeather {
+	lg := log.NewZapLogger()
+	httpClient := &http.Client{}
+	lt := location.NewIPStack()
+	return &OpenWeather{log: lg, httpClient: httpClient, location: lt}
 }
 
 func (o *OpenWeather) CheckByCurrentLocation() (*Weather, error) {

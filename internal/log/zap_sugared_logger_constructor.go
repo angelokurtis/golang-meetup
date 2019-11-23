@@ -5,7 +5,7 @@ import (
 	defaultLogger "log"
 )
 
-func NewSugaredLogger() *zap.SugaredLogger { // Provider
+func NewSugaredLogger() *zap.SugaredLogger {
 	logger, err := zap.NewDevelopment()
 	if err != nil {
 		defaultLogger.Fatal(err)

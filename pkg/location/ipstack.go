@@ -12,7 +12,9 @@ type IPStack struct {
 	httpClient *http.Client
 }
 
-func NewIPStack(log log.Logger, httpClient *http.Client) *IPStack {
+func NewIPStack() *IPStack {
+	log := log.NewZapLogger()
+	httpClient := &http.Client{}
 	return &IPStack{log: log, httpClient: httpClient}
 }
 

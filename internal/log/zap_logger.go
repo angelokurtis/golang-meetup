@@ -9,7 +9,8 @@ type ZapLogger struct {
 	*zap.SugaredLogger
 }
 
-func NewZapLogger(sugaredLogger *zap.SugaredLogger) *ZapLogger {
+func NewZapLogger() *ZapLogger {
+	sugaredLogger := NewSugaredLogger()
 	return &ZapLogger{SugaredLogger: sugaredLogger}
 }
 
