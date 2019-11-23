@@ -2,13 +2,14 @@ package log
 
 import (
 	"go.uber.org/zap"
-	"log"
+	defaultLogger "log"
 )
 
-func NewSugaredLogger() *zap.SugaredLogger {
+func NewSugaredLogger() *zap.SugaredLogger { // Provider
 	logger, err := zap.NewDevelopment()
 	if err != nil {
-		log.Fatal(err)
+		defaultLogger.Fatal(err)
 	}
-	return logger.Sugar()
+	log := logger.Sugar()
+	return log
 }

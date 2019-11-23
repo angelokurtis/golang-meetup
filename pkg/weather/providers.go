@@ -1,4 +1,4 @@
-package forecast
+package weather
 
 import (
 	"github.com/google/wire"

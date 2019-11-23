@@ -1,9 +1,5 @@
 package location
 
-type Finder interface {
-	WhereAmI() (*Location, error)
-}
-
 type Location struct {
 	CountryCode string  `json:"country_code"`
 	RegionCode  string  `json:"region_code"`
