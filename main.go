@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/angelokurtis/golang-meetup/pkg/weather"
 	"log"
 )
@@ -11,5 +12,5 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("o clima atual é de %.2f°C e %s", w.Temp, w.Description)
+	fmt.Printf("o clima atual é de %.2f°C e %s\n", w.Temp, w.Description)
 }

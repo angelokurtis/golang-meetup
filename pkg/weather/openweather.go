@@ -4,27 +4,22 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/angelokurtis/golang-meetup/internal/log"
 	"github.com/angelokurtis/golang-meetup/pkg/location"
 	"net/http"
 	"os"
 )
 
 type OpenWeather struct {
-	log        log.Logger
-	httpClient *http.Client
-	location   location.Locator
+	location location.Locator
 }
 
 func NewOpenWeather() *OpenWeather {
-	lg := log.NewZapLogger()
-	httpClient := &http.Client{}
-	lt := location.NewIPStack()
-	return &OpenWeather{log: lg, httpClient: httpClient, location: lt}
+	l := location.NewIPStack()
+	return &OpenWeather{location: l}
 }
 
 func (o *OpenWeather) CheckByCurrentLocation() (*Weather, error) {
-	o.log.Info("verificando clima na localidade atual")
+	fmt.Println("verificando clima na localidade atual")
 	l, err := o.location.WhereAmI()
 	if err != nil {
 		return nil, err
@@ -33,10 +28,10 @@ func (o *OpenWeather) CheckByCurrentLocation() (*Weather, error) {
 }
 
 func (o *OpenWeather) CheckByCoord(lat float64, lon float64) (*Weather, error) {
-	o.log.Info(fmt.Sprintf("verificando clima atual nas coordenadas de latitude %.2f e longitude %.2f", lat, lon))
+	fmt.Println(fmt.Sprintf("verificando clima atual nas coordenadas de latitude %.2f e longitude %.2f", lat, lon))
 
 	ak := os.Getenv("OPEN_WEATHER_API_ACCESS_KEY")
-	r, err := o.httpClient.Get(fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&APPID=%s&units=metric&lang=pt", lat, lon, ak))
+	r, err := http.Get(fmt.Sprintf("http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&APPID=%s&units=metric&lang=pt", lat, lon, ak))
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +48,7 @@ func (o *OpenWeather) CheckByCoord(lat float64, lon float64) (*Weather, error) {
 			return nil, errors.New("weathers is empty")
 		}
 		weather := weathers[0]
-		o.log.Info("clima atual encontrado")
+		fmt.Println("clima atual encontrado")
 		return &Weather{
 			Description: weather.Description,
 			Temp:        w.Main.Temp,

@@ -2,27 +2,22 @@ package location
 
 import (
 	"encoding/json"
-	"github.com/angelokurtis/golang-meetup/internal/log"
+	"fmt"
 	"net/http"
 	"os"
 )
 
-type IPStack struct {
-	log        log.Logger
-	httpClient *http.Client
-}
+type IPStack struct{}
 
 func NewIPStack() *IPStack {
-	log := log.NewZapLogger()
-	httpClient := &http.Client{}
-	return &IPStack{log: log, httpClient: httpClient}
+	return &IPStack{}
 }
 
 func (i *IPStack) WhereAmI() (*Location, error) {
-	i.log.Info("buscando minha localização atual")
+	fmt.Println("buscando minha localização atual")
 
 	ak := os.Getenv("IPSTACK_API_ACCESS_KEY")
-	r, err := i.httpClient.Get("http://api.ipstack.com/check?access_key=" + ak)
+	r, err := http.Get("http://api.ipstack.com/check?access_key=" + ak)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +28,7 @@ func (i *IPStack) WhereAmI() (*Location, error) {
 	if err != nil {
 		return nil, err
 	}
-	i.log.Info("localização encontrada")
-	i.log.Info("estamos em " + l.City + "/" + l.RegionCode)
+	fmt.Println("localização encontrada")
+	fmt.Println("estamos em " + l.City + "/" + l.RegionCode)
 	return l, nil
 }
