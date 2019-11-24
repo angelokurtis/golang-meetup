@@ -10,7 +10,7 @@ import (
 	"github.com/google/wire"
 )
 
-func Initialize() weather.Checker {
+func Initialize() weather.Checker { // Wire's Injector
 	wire.Build(http.Providers, log.Providers, weather.Providers, location.Providers)
 	return nil
 }

@@ -16,7 +16,7 @@ type OpenWeather struct {
 	location   location.Locator
 }
 
-func NewOpenWeather(log log.Logger, httpClient *http.Client, location location.Locator) *OpenWeather {
+func NewOpenWeather(log log.Logger, httpClient *http.Client, location location.Locator) *OpenWeather { // Wire's Provider
 	return &OpenWeather{log: log, httpClient: httpClient, location: location}
 }
 

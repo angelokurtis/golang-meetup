@@ -12,7 +12,7 @@ type IPStack struct {
 	httpClient *http.Client
 }
 
-func NewIPStack(log log.Logger, httpClient *http.Client) *IPStack {
+func NewIPStack(log log.Logger, httpClient *http.Client) *IPStack { // Wire's Provider
 	return &IPStack{log: log, httpClient: httpClient}
 }
 

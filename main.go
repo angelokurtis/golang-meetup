@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	weatherChecker := Initialize()
+	weatherChecker := Initialize() // initializing by injectors
 	weather, err := weatherChecker.CheckByCurrentLocation()
 	if err != nil {
 		log.Fatal(err)

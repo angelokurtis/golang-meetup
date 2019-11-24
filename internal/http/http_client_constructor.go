@@ -4,6 +4,6 @@ import (
 	"net/http"
 )
 
-func NewHttpClient() *http.Client {
+func NewHttpClient() *http.Client { // Wire's Provider
 	return &http.Client{}
 }
