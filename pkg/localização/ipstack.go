@@ -1,4 +1,4 @@
-package location
+package localização
 
 import (
 	"encoding/json"
@@ -13,7 +13,7 @@ func NewIPStack() *IPStack {
 	return &IPStack{}
 }
 
-func (i *IPStack) WhereAmI() (*Location, error) {
+func (i *IPStack) OndeEstou() (*Local, error) {
 	fmt.Println("buscando minha localização atual")
 
 	ak := os.Getenv("IPSTACK_API_ACCESS_KEY")
@@ -23,12 +23,12 @@ func (i *IPStack) WhereAmI() (*Location, error) {
 	}
 	b := r.Body
 	defer b.Close()
-	l := &Location{}
+	l := &Local{}
 	err = json.NewDecoder(b).Decode(l)
 	if err != nil {
 		return nil, err
 	}
 	fmt.Println("localização encontrada")
-	fmt.Println("estamos em " + l.City + "/" + l.RegionCode)
+	fmt.Println("estamos em " + l.Cidade + "/" + l.CódigoRegional)
 	return l, nil
 }

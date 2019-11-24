@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/angelokurtis/golang-meetup/pkg/weather"
+	móduloDeClima "github.com/angelokurtis/golang-meetup/pkg/clima"
 	"log"
 )
 
 func main() {
-	weatherChecker := weather.NewOpenWeather()
-	w, err := weatherChecker.CheckByCurrentLocation()
+	medidor := móduloDeClima.NewOpenWeather()
+	clima, err := medidor.AferirMinhaLocalização()
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("o clima atual é de %.2f°C e %s\n", w.Temp, w.Description)
+	fmt.Printf("o clima atual é de %.2f°C e %s\n", clima.Temperatura, clima.Descrição)
 }

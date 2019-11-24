@@ -1,33 +1,33 @@
-package weather
+package clima
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/angelokurtis/golang-meetup/pkg/location"
+	"github.com/angelokurtis/golang-meetup/pkg/localização"
 	"net/http"
 	"os"
 )
 
 type OpenWeather struct {
-	location location.Locator
+	location localização.Localizador
 }
 
 func NewOpenWeather() *OpenWeather {
-	l := location.NewIPStack()
+	l := localização.NewIPStack()
 	return &OpenWeather{location: l}
 }
 
-func (o *OpenWeather) CheckByCurrentLocation() (*Weather, error) {
+func (o *OpenWeather) AferirMinhaLocalização() (*Clima, error) {
 	fmt.Println("verificando clima na localidade atual")
-	l, err := o.location.WhereAmI()
+	l, err := o.location.OndeEstou()
 	if err != nil {
 		return nil, err
 	}
-	return o.CheckByCoord(l.Latitude, l.Longitude)
+	return o.AferirCoordenadas(l.Latitude, l.Longitude)
 }
 
-func (o *OpenWeather) CheckByCoord(lat float64, lon float64) (*Weather, error) {
+func (o *OpenWeather) AferirCoordenadas(lat float64, lon float64) (*Clima, error) {
 	fmt.Println(fmt.Sprintf("verificando clima atual nas coordenadas de latitude %.2f e longitude %.2f", lat, lon))
 
 	ak := os.Getenv("OPEN_WEATHER_API_ACCESS_KEY")
@@ -49,9 +49,9 @@ func (o *OpenWeather) CheckByCoord(lat float64, lon float64) (*Weather, error) {
 		}
 		weather := weathers[0]
 		fmt.Println("clima atual encontrado")
-		return &Weather{
-			Description: weather.Description,
-			Temp:        w.Main.Temp,
+		return &Clima{
+			Descrição:   weather.Description,
+			Temperatura: w.Main.Temp,
 		}, nil
 	}
 	return nil, errors.New(fmt.Sprintf("OpenWeather responded unexpectedly (HTTP code %d)", r.StatusCode))
