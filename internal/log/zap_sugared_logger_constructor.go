@@ -6,7 +6,9 @@ import (
 )
 
 func NewSugaredLogger() *zap.SugaredLogger { // Wire's Provider
-	logger, err := zap.NewDevelopment()
+	config := zap.NewDevelopmentConfig()
+	config.EncoderConfig.EncodeCaller = nil
+	logger, err := config.Build()
 	if err != nil {
 		defaultLogger.Fatal(err)
 	}
